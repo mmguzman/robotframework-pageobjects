@@ -1,3 +1,4 @@
+
 """
 .. module:: PageObjectLibrary
    :platform: Unix, Mac, Windows
@@ -98,6 +99,7 @@ class _PageMeta(_ComponentsManagerMeta):
 
                 base._fixed_docstring = True
 
+    """
     def __new__(cls, name, bases, classdict):
 
         # Don't do inspect.getmembers since it will try to evaluate functions
@@ -108,9 +110,11 @@ class _PageMeta(_ComponentsManagerMeta):
 
         cls._fix_docstrings(bases)
         return _ComponentsManagerMeta.__new__(cls, name, bases, classdict)
+    """
 
 
-class Page(_BaseActions, _SelectorsManager, _ComponentsManager):
+class Page(Selenium2Library):
+#class Page(_BaseActions,  _SelectorsManager, _ComponentsManager):
     """
     Base RF page object.
 
@@ -121,7 +125,7 @@ class Page(_BaseActions, _SelectorsManager, _ComponentsManager):
     This class then provides the behavior used by the RF's dynamic API.
     Optional constructor arguments:
     """
-    __metaclass__ = _PageMeta
+    #__metaclass__ = _PageMeta
 
 
     def __init__(self, *args, **kwargs):
@@ -154,15 +158,8 @@ class Page(_BaseActions, _SelectorsManager, _ComponentsManager):
     def _underscore(str):
         return re.sub(r"\s+", "_", str)
 
+    """
     def get_keyword_names(self):
-        """
-        RF Dynamic API hook implementation that provides a list of all keywords defined by
-        the implementing class. NB that this will not expose Selenium2Library's keywords.
-        That is done (in Robot) by programmatically importing Selenium2Library. See __init__
-        in _S2LWrapper.
-        This method uses the _Keywords class to handle exclusions and aliases.
-        :returns: list
-        """
 
         # Return all method names on the class to expose keywords to Robot Framework
         keywords = []
@@ -201,6 +198,7 @@ class Page(_BaseActions, _SelectorsManager, _ComponentsManager):
                     keywords += _Keywords.get_robot_aliases(name, self._underscore(self.name))
 
         return keywords
+    """
 
     def _attempt_screenshot(self):
             try:

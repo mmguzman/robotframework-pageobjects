@@ -240,11 +240,13 @@ class KeyUniquenessDict(dict):
             self.add(key, value)
 
 
-class _S2LWrapper(Selenium2Library):
+class _S2LWrapper(object):
+#class _S2LWrapper(Selenium2Library):
     """
     Helper class that wraps Selenium2Library and manages the browser cache.
     """
 
+    """
     def __init__(self, *args, **kwargs):
         if not Context.in_robot():
             kwargs["run_on_failure"] = "Nothing"
@@ -265,6 +267,7 @@ class _S2LWrapper(Selenium2Library):
             self._cache = self._shared_cache
         Context.set_cache(self._cache)
 
+    """
     @property
     @not_keyword
     def driver(self):
@@ -359,7 +362,7 @@ class _ComponentsManager(object):
     """
 
     """
-    __metaclass__ = _ComponentsManagerMeta
+    #__metaclass__ = _ComponentsManagerMeta
 
     @not_keyword
     def get_instance(self, component_class):
@@ -522,10 +525,8 @@ class _BaseActions(_S2LWrapper):
 
     _abstracted_logger = abstractedlogger.Logger()
 
+    """
     def __init__(self, *args, **kwargs):
-        """
-        Initializes the options used by the actions defined in this class.
-        """
         #_ComponentsManager.__init__(self, *args, **kwargs)
         #_SelectorsManager.__init__(self, *args, **kwargs)
         super(_BaseActions, self).__init__(*args, **kwargs)
@@ -562,6 +563,7 @@ class _BaseActions(_S2LWrapper):
         # There's only a session ID when using a remote webdriver (Sauce, for example)
         self.session_id = None
 
+    """
     def _parse_service_args(self, service_args):
         return [arg.strip() for arg in service_args.split(" ") if arg.strip() != ""]
 
